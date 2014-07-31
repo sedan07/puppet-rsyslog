@@ -49,21 +49,21 @@ class rsyslog::server (
   $high_precision_timestamps = false,
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,
+  $ssl_auth_mode             = 'anon',
   $ssl_key                   = undef,
   $log_templates             = false,
   $actionfiletemplate        = false,
   $rotate                    = undef
 ) inherits rsyslog {
 
-  ### Logrotate policy
   $logpath = $rotate ? {
-    'year'   => '/%$YEAR%/',
-    'YEAR'   => '/%$YEAR%/',
-    'month'  => '/%$YEAR%/%$MONTH%/',
-    'MONTH'  => '/%$YEAR%/%$MONTH%/',
-    'day'    => '/%$YEAR%/%$MONTH%/%$DAY%/',
-    'DAY'    => '/%$YEAR%/%$MONTH%/%$DAY%/',
-    default  => '/',
+    'year'  => '/%$YEAR%/',
+    'YEAR'  => '/%$YEAR%/',
+    'month' => '/%$YEAR%/%$MONTH%/',
+    'MONTH' => '/%$YEAR%/%$MONTH%/',
+    'day'   => '/%$YEAR%/%$MONTH%/%$DAY%/',
+    'DAY'   => '/%$YEAR%/%$MONTH%/%$DAY%/',
+    default => '/',
   }
 
   if $content {

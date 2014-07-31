@@ -51,7 +51,7 @@ $DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::server::ssl_cert')
 $DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::server::ssl_key') %>
 
 $InputTCPServerStreamDriverMode 1
-$InputTCPServerStreamDriverAuthMode anon
+$InputTCPServerStreamDriverAuthMode <%= scope.lookupvar('rsyslog::server::ssl_auth_mode') %>
 <% end -%>
 
 # Switch to remote ruleset

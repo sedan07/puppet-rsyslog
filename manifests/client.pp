@@ -18,6 +18,8 @@
 # [*port*]
 # [*remote_servers*]
 # [*ssl_ca*]
+# [*ssl_cert*]
+# [*ssl_key*]
 # [*ssl_permitted_peer*]
 # [*ssl_
 # [*log_templates*]
@@ -32,6 +34,7 @@
 #  class { 'rsyslog::client': }
 #
 class rsyslog::client (
+<<<<<<< HEAD
   $log_remote                = true,
   $spool_size                = '1g',
   $spool_timeoutenqueue      = false,
@@ -47,6 +50,8 @@ class rsyslog::client (
   $port                      = '514',
   $remote_servers            = false,
   $ssl_ca                    = undef,
+  $ssl_cert                  = undef,
+  $ssl_key                   = undef,
   $ssl_permitted_peer        = undef,
   $ssl_auth_mode             = 'anon',
   $log_templates             = false,
@@ -117,5 +122,4 @@ class rsyslog::client (
   if $ssl_permitted_peer and $ssl_auth_mode != 'x509/name' {
     fail("You need to set auth_mode to 'x509/name' in order to use ssl_permitted_peers.")
   }
-
 }
