@@ -29,28 +29,27 @@
 #  }
 #
 class rsyslog::server (
-  $enable_tcp                = true,
-  $enable_udp                = true,
-  $enable_onefile            = false,
-  $server_dir                = '/srv/log/',
-  $custom_config             = undef,
-  $port                      = '514',
+  $enable_tcp     = true,
+  $enable_udp     = true,
+  $enable_onefile = false,
+  $server_dir     = '/srv/log/',
+  $custom_config  = undef,
+  $port           = '514',
   $high_precision_timestamps = false,
-  $ssl_ca                    = undef,
-  $ssl_cert                  = undef,
-  $ssl_key                   = undef,
-  $rotate                    = undef
-) inherits rsyslog {
-
-  ### Logrotate policy
+  $ssl_ca         = undef,
+  $ssl_cert       = undef,
+  $ssl_key        = undef,
+  $ssl_auth_mode  = 'anon',
+  $rotate         = undef) inherits rsyslog {
+  # ## Logrotate policy
   $logpath = $rotate ? {
-    'year'   => '/%$YEAR%/',
-    'YEAR'   => '/%$YEAR%/',
-    'month'  => '/%$YEAR%/%$MONTH%/',
-    'MONTH'  => '/%$YEAR%/%$MONTH%/',
-    'day'    => '/%$YEAR%/%$MONTH%/%$DAY%/',
-    'DAY'    => '/%$YEAR%/%$MONTH%/%$DAY%/',
-    default  => '/',
+    'year'  => '/%$YEAR%/',
+    'YEAR'  => '/%$YEAR%/',
+    'month' => '/%$YEAR%/%$MONTH%/',
+    'MONTH' => '/%$YEAR%/%$MONTH%/',
+    'day'   => '/%$YEAR%/%$MONTH%/%$DAY%/',
+    'DAY'   => '/%$YEAR%/%$MONTH%/%$DAY%/',
+    default => '/',
   }
 
   if $custom_config {

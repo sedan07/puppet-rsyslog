@@ -16,6 +16,8 @@
 # [*port*]
 # [*remote_servers*]
 # [*ssl_ca*]
+# [*ssl_cert*]
+# [*ssl_key*]
 # [*log_templates*]
 # [*actionfiletemplate*]
 #
@@ -37,10 +39,11 @@ class rsyslog::client (
   $port               = '514',
   $remote_servers     = false,
   $ssl_ca             = undef,
+  $ssl_cert           = undef,
+  $ssl_key            = undef,
+  $ssl_auth_mode      = 'anon',
   $log_templates      = false,
-  $actionfiletemplate = false
-) inherits rsyslog {
-
+  $actionfiletemplate = false) inherits rsyslog {
   if $custom_config {
     $content_real = template($custom_config)
   } else {

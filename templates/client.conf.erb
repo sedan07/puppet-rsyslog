@@ -27,11 +27,17 @@ $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 # Setup SSL connection.
 # CA/Cert
 $DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
+<% if scope.lookupvar('rsyslog::client::ssl_cert') -%>
+$DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::client::ssl_cert') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::ssl_key') -%>
+$DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::client::ssl_key') %>
+<% end -%>
 
 # Connection settings.
 $DefaultNetstreamDriver gtls
 $ActionSendStreamDriverMode 1
-$ActionSendStreamDriverAuthMode anon
+$ActionSendStreamDriverAuthMode <%= scope.lookupvar('rsyslog::client::ssl_auth_mode') %>
 <% end -%>
 <% if scope.lookupvar('rsyslog::client::remote_servers')  -%>
 
