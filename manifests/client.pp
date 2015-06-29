@@ -34,7 +34,6 @@
 #  class { 'rsyslog::client': }
 #
 class rsyslog::client (
-<<<<<<< HEAD
   $log_remote                = true,
   $spool_size                = '1g',
   $spool_timeoutenqueue      = false,

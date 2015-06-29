@@ -48,6 +48,12 @@ $UDPServerRun 514
 # Setup SSL connection.
 # CA/Cert
 $DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
+<% if scope.lookupvar('rsyslog::client::ssl_cert') -%>
+$DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::client::ssl_cert') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::ssl_key') -%>
+$DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::client::ssl_key') %>
+<% end -%>
 
 # Connection settings.
 $DefaultNetstreamDriver gtls
@@ -62,4 +68,3 @@ $ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::client::ssl_p
 # Load RELP module.
 $ModLoad omrelp
 <% end -%>
-
