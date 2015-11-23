@@ -6,13 +6,20 @@
 #
 # [*enable_tcp*]
 # [*enable_udp*]
+# [*enable_relp*]
 # [*enable_onefile*]
 # [*server_dir*]
 # [*custom_config*]
+# [*port*]
+# [*relp_port*]
+# [*address*]
 # [*high_precision_timestamps*]
 # [*ssl_ca*]
 # [*ssl_cert*]
 # [*ssl_key*]
+# [*log_templates*]
+# [*actionfiletemplate*]
+# [*rotate*]
 #
 # === Variables
 #
@@ -31,14 +38,20 @@
 class rsyslog::server (
   $enable_tcp                = true,
   $enable_udp                = true,
+  $enable_relp               = true,
   $enable_onefile            = false,
   $server_dir                = '/srv/log/',
   $custom_config             = undef,
+  $content                   = undef,
   $port                      = '514',
+  $relp_port                 = '20514',
+  $address                   = '*',
   $high_precision_timestamps = false,
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,
   $ssl_key                   = undef,
+  $log_templates             = false,
+  $actionfiletemplate        = false,
   $rotate                    = undef
 ) inherits rsyslog {
 
@@ -53,7 +66,12 @@ class rsyslog::server (
     default  => '/',
   }
 
-  if $custom_config {
+  if $content {
+    if $custom_config {
+      fail 'Cannot set both $content and $custom_config'
+    }
+    $real_content = $content
+  } elsif $custom_config {
     $real_content = template($custom_config)
   } else {
     $real_content = template("${module_name}/server-default.conf.erb")

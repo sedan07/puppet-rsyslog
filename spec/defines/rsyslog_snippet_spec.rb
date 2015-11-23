@@ -12,9 +12,9 @@ describe 'rsyslog::snippet', :type => :define do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'Redhat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'Redhat',
+          :operatingsystemmajrelease => '6',
         })
       end
 
@@ -37,6 +37,7 @@ describe 'rsyslog::snippet', :type => :define do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
 
@@ -58,7 +59,8 @@ describe 'rsyslog::snippet', :type => :define do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
@@ -68,7 +70,7 @@ describe 'rsyslog::snippet', :type => :define do
         }
       }
 
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-snippet-basic' }
 
         it 'should compile' do
@@ -88,9 +90,9 @@ describe 'rsyslog::snippet', :type => :define do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'Redhat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'Redhat',
+          :operatingsystemmajrelease => '6',
         })
       end
 
@@ -113,6 +115,7 @@ describe 'rsyslog::snippet', :type => :define do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
 
@@ -134,7 +137,8 @@ describe 'rsyslog::snippet', :type => :define do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
@@ -144,7 +148,7 @@ describe 'rsyslog::snippet', :type => :define do
         }
       }
 
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-snippet-basic' }
 
         it 'should compile' do

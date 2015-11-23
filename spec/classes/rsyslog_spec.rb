@@ -12,9 +12,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -33,6 +33,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -45,12 +46,31 @@ describe 'rsyslog', :type => :class do
           should contain_class('rsyslog::service')
         end
       end
+
+      context "local host name (osfamily = Debian)" do
+        let(:title) { 'rsyslog-local-hostname' }
+
+        context "with defaults" do
+          it 'is not set' do
+            should contain_file('/etc/rsyslog.conf').without_content(/\$LocalHostName/)
+          end
+        end
+
+        context "when set" do
+          let(:params) { { :local_host_name => 'example.dev' } }
+
+          it 'should compile' do
+            should contain_file('/etc/rsyslog.conf').with_content(/\$LocalHostName example.dev/)
+          end
+        end
+      end
     end
   
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
@@ -68,9 +88,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -88,6 +108,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -104,11 +125,12 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-basic' }
   
         it 'should compile' do
@@ -121,9 +143,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -141,6 +163,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -157,11 +180,12 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-install-basic' }
   
         it 'should compile' do
@@ -174,9 +198,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -193,6 +217,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -208,11 +233,12 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-service-basic' }
   
         it 'should compile' do
@@ -232,9 +258,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -253,6 +279,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -270,7 +297,8 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
@@ -288,9 +316,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -308,6 +336,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -324,11 +353,12 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-basic' }
   
         it 'should compile' do
@@ -341,9 +371,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -361,6 +391,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -377,11 +408,12 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-install-basic' }
   
         it 'should compile' do
@@ -394,9 +426,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
   
@@ -413,6 +445,7 @@ describe 'rsyslog', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
   
@@ -428,11 +461,12 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
   
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-service-basic' }
   
         it 'should compile' do
@@ -452,9 +486,9 @@ describe 'rsyslog', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
 

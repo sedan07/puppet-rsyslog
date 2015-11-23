@@ -34,15 +34,17 @@ class rsyslog::config {
     ensure  => file,
     owner   => 'root',
     group   => $rsyslog::run_group,
-    source  => "puppet:///modules/rsyslog/${rsyslog::rsyslog_default_file}",
+    content => template("${module_name}/${rsyslog::rsyslog_default_file}.erb"),
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
 
   file { $rsyslog::spool_dir:
     ensure  => directory,
-    owner   => 'root',
+    owner   => $rsyslog::run_user,
     group   => $rsyslog::run_group,
+    mode    => '0700',
+    seltype => 'syslogd_var_lib_t',
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
