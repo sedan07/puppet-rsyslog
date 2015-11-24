@@ -3,3 +3,7 @@ pkg/
 .forge-releng
 /spec/fixtures
 .DS_Store
+.bundle
+.gemfile.lock
+Gemfile.lock
+vendor/

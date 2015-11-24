@@ -1,6 +1,7 @@
 # == Class: rsyslog
 #
-# Meta class to install rsyslog with a basic configuration. You probably want rsyslog::client or rsyslog::server
+# Meta class to install rsyslog with a basic configuration.
+# You probably want rsyslog::client or rsyslog::server
 #
 # === Parameters
 #
@@ -27,6 +28,7 @@ class rsyslog (
   $log_user               = $rsyslog::params::log_user,
   $log_group              = $rsyslog::params::log_group,
   $log_style              = $rsyslog::params::log_style,
+  $umask                  = $rsyslog::params::umask,
   $perm_file              = $rsyslog::params::perm_file,
   $perm_dir               = $rsyslog::params::perm_dir,
   $spool_dir              = $rsyslog::params::spool_dir,
@@ -37,9 +39,21 @@ class rsyslog (
   $server_conf            = $rsyslog::params::server_conf,
   $ssl                    = $rsyslog::params::ssl,
   $modules                = $rsyslog::params::modules,
-  $preserve_fqdn          = $rsyslog::params::preserve_fqdn
+  $preserve_fqdn          = $rsyslog::params::preserve_fqdn,
+  $local_host_name        = undef,
+  $max_message_size       = $rsyslog::params::max_message_size,
+  $extra_modules          = $rsyslog::params::extra_modules,
+  $default_template       = $rsyslog::params::default_template,
+  $msg_reduction          = $rsyslog::params::msg_reduction,
+  $non_kernel_facility    = $rsyslog::params::non_kernel_facility,
+  $omit_local_logging     = $rsyslog::params::omit_local_logging
 ) inherits rsyslog::params {
   class { 'rsyslog::install': }
   class { 'rsyslog::config': }
+
+  if $extra_modules != [] {
+    class { 'rsyslog::modload': }
+  }
+
   class { 'rsyslog::service': }
 }

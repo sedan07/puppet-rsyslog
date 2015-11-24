@@ -8,18 +8,40 @@ $ModLoad imudp
 $ModLoad imtcp
 <% end -%>
 
-#
+<% if scope.lookupvar('rsyslog::server::enable_relp') -%>
+<% if (scope.function_versioncmp([@rsyslog_version, '6.3.6']) >= 0) -%>
+# Load RELP module
+$ModLoad imrelp
+<% end -%>
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::server::log_templates') and ! scope.lookupvar('rsyslog::server::log_templates').empty?-%>
+
+# Define custom logging templates
+<% scope.lookupvar('rsyslog::server::log_templates').flatten.compact.each do |log_template| -%>
+$template <%= log_template['name'] %>,"<%= log_template['template'] %>"
+<% end -%>
+<% end -%>
+<% if scope.lookupvar('rsyslog::server::actionfiletemplate') -%>
+
+# Using specified format for default logging format:
+$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::server::actionfiletemplate') %>
+<% else -%>
+
 <% if scope.lookupvar('rsyslog::server::high_precision_timestamps') == false -%>
+#
 # Use traditional timestamp format.
 #
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% else -%>
+#
 # Use high precision timestamp format.
 #
 $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
+<% end -%>
 
-<% if scope.lookupvar('rsyslog::server::ssl') -%>
+<% if scope.lookupvar('rsyslog::ssl') -%>
 # Server side SSL.
 $DefaultNetstreamDriver gtls
 
