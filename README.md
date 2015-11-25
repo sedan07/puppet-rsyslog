@@ -32,28 +32,30 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
 #### Variables and default values
 ```
   class { 'rsyslog::client':
-    log_remote                => true,
-    spool_size                => '1g',
-    spool_timeoutenqueue      => false,
-    remote_type               => 'tcp',
-    remote_forward_format     => 'RSYSLOG_ForwardFormat',
-    log_local                 => false,
-    log_auth_local            => false,
-    listen_localhost          => false,
-    split_config              => false,
-    custom_config             => undef,
-    custom_params             => undef,
-    server                    => 'log',
-    port                      => '514',
-    remote_servers            => false,
-    ssl_ca                    => undef,
-    ssl_permitted_peer        => undef,
-    ssl_auth_mode             => 'anon',
-    log_templates             => false,
-    actionfiletemplate        => false,
-    high_precision_timestamps => false,
-    rate_limit_burst          => undef,
-    rate_limit_interval       => undef
+    log_remote                    => true,
+    spool_size                    => '1g',
+    spool_timeoutenqueue          => false,
+    remote_type                   => 'tcp',
+    remote_forward_format         => 'RSYSLOG_ForwardFormat',
+    log_local                     => false,
+    log_auth_local                => false,
+    listen_localhost              => false,
+    split_config                  => false,
+    custom_config                 => undef,
+    custom_params                 => undef,
+    server                        => 'log',
+    port                          => '514',
+    remote_servers                => false,
+    ssl_ca                        => undef,
+    ssl_permitted_peer            => undef,
+    ssl_auth_mode                 => 'anon',
+    log_templates                 => false,
+    actionfiletemplate            => false,
+    high_precision_timestamps     => false,
+    rate_limit_burst              => undef,
+    rate_limit_interval           => undef
+    imjournal_rate_limit_burst    => undef,
+    imjournal_rate_limit_interval => undef
   }
 ```
 for read from file
